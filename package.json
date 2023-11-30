@@ -10,6 +10,9 @@
   "devDependencies": {
     "@nuxt/content": "2.3.0",
     "@nuxtjs/tailwindcss": "6.2.0",
-    "nuxt": "3.0.0"
+    "nuxt": "^3.5.2"
+  },
+  "dependencies": {
+    "vite-plugin-pug": "^0.3.2"
   }
 }
