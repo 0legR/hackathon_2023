@@ -1,5 +1,5 @@
 <template lang="pug">
-.container.flex.items-center.justify-center.gap-x-4.h-screen
+.container.flex.items-center.justify-center.gap-x-4.h-screen.mx-auto
   NuxtLink.p-3.text-sm.font-medium.text-light.uppercase.bg-firebrick.rounded.text-center(to="https://www.anybiz.io")
     span.default Stay in Matrix
     span.hovered Leave
@@ -30,5 +30,8 @@
 }
 .default {
   display: block;
+}
+.mx-auto {
+  margin: 0 auto;
 }
 </style>
