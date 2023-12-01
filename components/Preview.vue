@@ -6,9 +6,9 @@
     .w-full.flex
       .flex.flex-col.gap-y-4.border-r.p-4.mt-2(class="w-1/3")
         NuxtLink.p-3.text-sm.font-medium.text-dark.uppercase.bg-light.text-center.shadow-xl.rounded-lg(
-          v-for="btn of campaign.buttons"
+          v-for="(btn, index) of campaign.buttons"
           :class="{ 'hidden': !btn.title || !btn.url }"
-          :key="btn.title"
+          :key="`${btn.title}_${index}`"
           :to="btn.url"
         ) {{ btn.title }}
       .flex(class="w-2/3")
