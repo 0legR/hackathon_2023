@@ -22,41 +22,16 @@ export default {
       toggleOpen: true,
       tabs: [
         {
-          title: 'Server Routes',
-          path: '/server-routes',
-        },
-
-        {
-          title: 'Teleports',
-          path: '/teleports',
+          title: 'Home',
+          path: '/cabinet',
         },
         {
-          title: 'Middleware',
-          path: '/middleware',
+          title: 'Profile',
+          path: '/profile',
         },
         {
-          title: 'Nuxt on the Edge',
-          path: '/edge-functions',
-        },
-        {
-          title: 'Nuxt Loading Indicator',
-          path: '/nuxt-loading-indicator',
-        },
-        // {
-        // 	title: 'Image Optimization',
-        // 	path: '/image'
-        // },
-        {
-          title: 'Nuxt Link',
-          path: '/nuxt-link-component',
-        },
-        {
-          title: 'Nuxt Content',
-          path: '/nuxt-content',
-        },
-        {
-          title: 'Data Fetching',
-          path: '/data-fetching',
+          title: 'Leave',
+          path: '/',
         },
       ],
     };

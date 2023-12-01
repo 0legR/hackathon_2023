@@ -1,4 +1,4 @@
 <template lang="pug">
-.w-full.max-w-5xl.max-h-screen.px-12.overflow-y-auto.pb-9
+.w-full.bg-dark.w-full.min-h-screen
   slot
 </template>
