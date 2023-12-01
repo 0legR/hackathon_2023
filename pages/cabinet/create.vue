@@ -18,6 +18,8 @@
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
     button.p-3.text-sm.font-medium.text-light.uppercase.bg-primary.rounded.text-center Generate
+    .w-full.shadow-xl.rounded-md.overflow-hidden
+      Preview(:campaign="form")
   .flex.flex-col.w-full.overflow-auto(v-if="activeTab === prospectsTab")
     .flex.justify-between.w-full.mt-10
       button.w-40.h-10.border.border-dark.h-10.rounded-md.text-base.text-dark(@click="importProspect") Import
@@ -48,6 +50,7 @@
 </template>
 
 <script setup>
+import defaultPageBody from '@/public/ipsum'
 definePageMeta({
   layout: 'cabinet',
 })
@@ -58,6 +61,7 @@ const form = ref({
   domain: '',
   description: '',
   goal: 'Select your goal',
+  page_body: defaultPageBody,
   buttons: [
 		{
 			title: '',
@@ -181,11 +185,6 @@ function exportProspect() {
   console.log('Export')
 }
 
-function tabToggler(val) {
-  console.log('.value', val)
-  // activeTab.value = val
-}
-
 // --------lifecycle hooks-----
 onMounted(async () => {
   await getProspects()
@@ -228,5 +227,8 @@ onMounted(async () => {
 }
 .btn-tab--active {
   background-color: aquamarine;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 </style>
