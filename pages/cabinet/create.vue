@@ -1,5 +1,5 @@
 <template lang="pug">
-#campaign-form.container.pt-6
+.container.pt-6
   .flex.w-fit.justify-center.items-center.mx-auto
     button.w-40.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === mainTab }" @click="activeTab = mainTab") Main Settings
     button.w-40.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === prospectsTab }" @click="activeTab = prospectsTab") Prospects
@@ -11,7 +11,7 @@
       option(v-for="goal of goals" :key="goal") {{ goal }}
     textarea.border.border-dark.h-60.rounded-md.text-base.text-dark.p-2(v-model="form.description" class="w-4/5" placeholder="Deepest Insights, Alerts, & Automation Platform to Improve User Experience, real-time, 24×7")
     .flex.flex-col.gap-y-4(class="w-1/2")
-      .flex.justify-center.items-center.gap-x-4.f-wull(v-if="form.buttons.length" v-for="(btn, index) of form.buttons" :key="`${btn}-${index}`")
+      .flex.justify-center.items-center.gap-x-4.f-wull(v-if="form.buttons.length" v-for="(btn, index) of form.buttons" :key="`${btn}-${index}-b`")
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.title" class="w-1/2" placeholder="Btn Label")
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.url" class="w-1/2" placeholder="Btn Url")
       .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
@@ -170,13 +170,16 @@ const goals = [
 ]
 
 // ----------methods--------
-async function getProspects() {
-  // try {
-  //   let response = await $fetch('https://jsonplaceholder.typicode.com/todos/1')
-  //   console.log('Response', response)
-  // } catch(error) {
-  //   console.log(error)
-  // }
+async function getProspects(id) {
+  try {
+    const { data } = await useFetch(`campaigns/${id}/prospects`, {
+      method: 'get',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+    })
+    prospectsList.value = data.value
+  } catch (error) {
+    console.log('generate Error')
+  }
 }
 
 function importProspect() {
@@ -188,7 +191,7 @@ function exportProspect() {
 }
 async function generate() {
   try {
-    const { data } = await useFetch(`campaigns/${form.id}/gen-page`, {
+    const { data } = await useFetch(`campaigns/${form?.value?.id}/gen-page`, {
       method: 'post',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
       body: {
@@ -197,8 +200,7 @@ async function generate() {
         goal: form.value.goal,
       },
     })
-    console.log('generate', data)
-    form.page_body = data.page_body
+    form.page_body.value = data.value.page_body
   } catch (error) {
     console.log('generate Error')
   }
@@ -210,9 +212,8 @@ async function getCampaigns() {
       method: 'get',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
     })
-    campaigns.value = data
-    console.log('getCampaigns', campaigns)
-    getCampaign(campaigns[0].id)
+    campaigns.value = data.value
+    getCampaign(campaigns?.value[0]?.id)
   } catch (error) {
     console.log('getCampaigns Error')
   }
@@ -223,18 +224,18 @@ async function getCampaign(id) {
       method: 'get',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
     })
-    form.value = data
-    console.log('getCampaignSettings', form)
+    form.value = data.value
+    getProspects(id)
   } catch (error) {
     console.log('getCampaign Error')
   }
 }
 
+await getCampaigns()
 // --------lifecycle hooks-----
-onMounted(async () => {
-  await getCampaigns()
-  await getProspects()
-})
+// onMounted(async () => {
+// await getProspects()
+// })
 
 //------------head---------
 useHead({
