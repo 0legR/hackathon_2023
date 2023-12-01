@@ -17,7 +17,7 @@
       .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
-    button.p-3.text-sm.font-medium.text-light.uppercase.bg-primary.rounded.text-center Generate
+    button.p-3.text-sm.font-medium.text-light.uppercase.bg-primary.rounded.text-center(@click="generate") Generate
     .w-full.shadow-xl.rounded-md.overflow-hidden
       Preview(:campaign="form")
   .flex.flex-col.w-full.overflow-auto(v-if="activeTab === prospectsTab")
@@ -73,6 +73,8 @@ const form = ref({
 		},
 	],
 })
+
+const campaigns = ref([])
 
 const mainTab = 'main'
 const prospectsTab = 'prospects'
@@ -184,10 +186,77 @@ function importProspect() {
 function exportProspect() {
   console.log('Export')
 }
+async function generate() {
+  try {
+    const { data } = await useFetch(`campaigns/${form.id}/gen-page`, {
+      method: 'post',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+      body: {
+        name: form.value.name,
+        description: form.value.description,
+        goal: form.value.goal,
+      },
+    })
+    console.log('generate', data)
+    form.page_body = data.page_body
+  } catch (error) {
+    console.log('generate Error')
+  }
+}
+
+async function getCampaigns() {
+  try {
+    const { data } = await useFetch(`campaigns`, {
+      method: 'get',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+    })
+    campaigns.value = data
+    console.log('getCampaigns', campaigns)
+    getCampaign(campaigns[0].id)
+  } catch (error) {
+    console.log('getCampaigns Error')
+  }
+}
+async function getCampaign(id) {
+  try {
+    const { data } = await useFetch(`campaigns/${id}/settings`, {
+      method: 'get',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+    })
+    form.value = data
+    console.log('getCampaignSettings', form)
+  } catch (error) {
+    console.log('getCampaign Error')
+  }
+}
 
 // --------lifecycle hooks-----
 onMounted(async () => {
+  await getCampaigns()
   await getProspects()
+})
+
+//------------head---------
+useHead({
+  title: 'Campaign',
+  meta: [
+    {
+      name: 'description',
+      // content: data.value.Plot,
+    },
+    {
+      property: 'og:description',
+      // content: data.value.Plot,
+    },
+    {
+      property: 'og:image',
+      // content: data.value.Poster,
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+  ],
 })
 </script>
 

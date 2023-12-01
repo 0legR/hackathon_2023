@@ -1,5 +1,5 @@
 <template lang="pug">
-.w-full
+.w-full.p-6
   h1 profile page
 </template>
 <script setup>
