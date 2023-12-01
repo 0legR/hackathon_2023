@@ -13,6 +13,7 @@
     "nuxt": "^3.5.2"
   },
   "dependencies": {
-    "vite-plugin-pug": "^0.3.2"
+    "vite-plugin-pug": "^0.3.2",
+    "vue-select": "^4.0.0-beta.6"
   }
 }
