@@ -4,6 +4,6 @@
 </template>
 <style>
 .bg-img {
-  background-image: url('matrix.gif');
+  /* background-image: url('matrix.gif'); */
 }
 </style>

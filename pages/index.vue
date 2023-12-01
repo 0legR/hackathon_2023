@@ -1,9 +1,11 @@
 <template lang="pug">
-.container.flex.items-center.justify-center.gap-x-4.h-screen.mx-auto
-  NuxtLink.p-3.text-sm.font-medium.text-light.uppercase.bg-firebrick.rounded.text-center(to="https://www.anybiz.io")
+NuxtLink(to="cabinet")
+  img(src="landing.png")
+//- .container.flex.items-center.justify-center.gap-x-4.h-screen.mx-auto
+  //- NuxtLink.p-3.text-sm.font-medium.text-light.uppercase.bg-firebrick.rounded.text-center(to="https://www.anybiz.io")
     span.default Stay in Matrix
     span.hovered Leave
-  NuxtLink.p-3.text-sm.font-medium.text-light.uppercase.bg-darkcyan.rounded.text-center(to="cabinet")
+  //- NuxtLink.p-3.text-sm.font-medium.text-light.uppercase.bg-darkcyan.rounded.text-center(to="cabinet")
     span.default Go to Reality
     span.hovered Ready
 </template>
