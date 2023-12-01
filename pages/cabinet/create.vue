@@ -1,6 +1,6 @@
 <template lang="pug">
 .container.pt-6
-  .flex.w-full.justify-center.items-center
+  .flex.w-fit.justify-center.items-center.mx-auto
     button.w-40.h-10(:class="{ 'activeTab': activeTab === mainTab }" @click="activeTab = mainTab") Main Settings
     button.w-40.h-10(:class="{ 'activeTab': activeTab === prospectsTab }" @click="activeTab = prospectsTab") Prospects
   .flex.flex-col.gap-y-4.items-center.w-full.min-h-screen.mt-6(v-if="activeTab === mainTab")
