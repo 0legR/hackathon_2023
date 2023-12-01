@@ -23,7 +23,7 @@
       button.w-40.h-10.border.border-dark.h-10.rounded-md.text-base.text-dark(@click="importProspect") Import
       button.w-40.h-10.border.border-dark.h-10.rounded-md.text-base.text-dark(@click="exportProspect") Export
     .flex.mt-10
-      input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search")
+      input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search" disabled)
     .prospect-tab__list-table.flex.flex-col.w-full.space-y-4.mt-10
       .prospect-tab__list-header.flex.border.border-dark.h-10.rounded-md
         .flex.items-center.justify-center(
@@ -156,6 +156,22 @@ const prospectsList = ref([
 		last_activity: "datetime",
 	}
 ])
+const goals = [
+  'Collect Emails',
+  'Get Contacted',
+  'Schedule Appointments',
+  'Link to Site',
+]
+
+// ----------methods--------
+async function getProspects() {
+  // try {
+  //   let response = await $fetch('https://jsonplaceholder.typicode.com/todos/1')
+  //   console.log('Response', response)
+  // } catch(error) {
+  //   console.log(error)
+  // }
+}
 
 function importProspect() {
   console.log('Import')
@@ -164,17 +180,16 @@ function importProspect() {
 function exportProspect() {
   console.log('Export')
 }
-const goals = [
-  'Collect Emails',
-  'Get Contacted',
-  'Schedule Appointments',
-  'Link to Site',
-]
-// ----------methods--------
+
 function tabToggler(val) {
   console.log('.value', val)
   // activeTab.value = val
 }
+
+// --------lifecycle hooks-----
+onMounted(async () => {
+  await getProspects()
+})
 </script>
 
 <style scoped>
