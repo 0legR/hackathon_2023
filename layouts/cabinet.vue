@@ -27,7 +27,7 @@ export default {
         },
         {
           title: 'Profile',
-          path: '/profile',
+          path: '/cabinet/profile',
         },
         {
           title: 'Leave',
