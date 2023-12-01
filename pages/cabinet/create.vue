@@ -18,6 +18,8 @@
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
         input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
     button.p-3.text-sm.font-medium.text-light.uppercase.bg-primary.rounded.text-center Generate
+    .w-full.shadow-xl.rounded-md.overflow-hidden
+      Preview(:campaign="form")
   .flex.w-full.min-h-screen(v-if="activeTab === prospectsTab") Prospects
 </template>
 
@@ -75,5 +77,8 @@ function tabToggler(val) {
 }
 .btn-tab--active {
   background-color: aquamarine;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 </style>
