@@ -1,15 +1,16 @@
 <template>
-  <div class="absolute z-30 flex-none w-64 h-screen p-4 md:relative">
+  <div class="absolute z-30 flex-none w-64 h-full md:relative m-4">
     <div
-      class="w-full h-full p-5 bg-white border rounded-md shadow-lg border-light"
+      class="left-sidenav w-full h-screen p-4 bg-white rounded-md shadow-lg border-light"
     >
-      <div class="flex items-center justify-between mb-6">
+      <div class="logo-wrapper flex justify-between mb-6">
+        <div></div>
         <div class="flex items-center">
-          <img src="/tree.webp" class="h-6" />
+          <img src="/logo.png" class="h-16" />
         </div>
         <img
-          src="/menu-close.png"
-          class="h-6"
+          src="/close.png"
+          class="h-6 cursor-pointer"
           @click="$emit('toggleOpen', false)"
         />
       </div>
@@ -18,7 +19,7 @@
         :key="tab.path"
         :class="`${
           currentRoute === tab.path ? 'text-secondary font-bold' : ''
-        } pb-2`"
+        } py-1 side-nav-item flex flex-col items-center justify-center text-white`"
       >
         <NuxtLink :to="`${tab.path}`"> {{ tab.title }} </NuxtLink>
       </div>
@@ -31,3 +32,23 @@ export default {
   props: ['tabs', 'currentRoute'],
 };
 </script>
+
+<style>
+.left-sidenav {
+  border-radius: 10px;
+  background: rgba(22, 31, 80, 0.50);
+}
+.logo-wrapper {
+  border-bottom: 1px solid white;
+}
+.side-nav-item {
+  border-radius: 10px;
+  background: #2C2042;
+}
+.side-nav-item:nth-child(3) {
+  margin: 20px 0;
+}
+.side-nav-item:nth-child(4) {
+  margin-top: 140px;
+}
+</style>

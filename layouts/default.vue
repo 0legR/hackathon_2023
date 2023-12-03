@@ -1,5 +1,5 @@
 <template lang="pug">
-.bg-dark.w-full.min-h-screen.bg-img
+.bg-dark.w-full.bg-img
   slot
 </template>
 <style>
