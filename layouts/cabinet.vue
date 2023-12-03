@@ -1,5 +1,6 @@
 <template>
-  <div class="cabinet-wrapper px-6 py-8">
+  <div class="cabinet-wrapper relative p-4">
+    <div v-if="toggleOpen" class="blur-block" @click.stop="toggleOpen = false"></div>
     <div class="cabinet flex">
       <SideNav
         v-if="toggleOpen"
@@ -7,11 +8,16 @@
         :currentRoute="currentRoute"
         @toggleOpen="toggleOpen = $event"
       />
-      <div v-else class="absolute top-14 left-14">
+      <div v-else class="absolute top-10 left-8">
         <img @click="toggleOpen = true" src="/open-menu.png" class="h-6 cursor-pointer" />
       </div>
+      <div v-if="!toggleOpen" class="absolute top-4 right-14">
+        <NuxtLink to="/cabinet">
+          <img src="/logo.png" class="h-16" />
+        </NuxtLink>
+      </div>
       <div
-        class="main-block w-full overflow-y-auto h-screen"
+        class="main-block w-full"
         :class="toggleOpen ? '' : 'show-sidebar'"
       >
         <slot />
@@ -24,7 +30,7 @@
 export default {
   data() {
     return {
-      toggleOpen: true,
+      toggleOpen: false,
       tabs: [
         {
           title: 'Home',
@@ -57,14 +63,26 @@ export default {
 <style>
 .cabinet-wrapper {
   background: #000;
-  overflow: hidden;
+  overflow: none;
+  height: 100vh;
+}
+.cabinet-wrapper:has(.left-sidenav) .blur-block {
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(115, 112, 119, 0.8);
 }
 .cabinet {
+  height: 100%;
   border-radius: 15px;
   background: rgb(44, 32, 66, 0.60);
+  box-shadow: 0px 1px 8px 2px #415EF7;
 }
 .cabinet:has(.create-section) {
   background: #000;
+  box-shadow: none;
 }
 ::-webkit-scrollbar { 
     display: none;

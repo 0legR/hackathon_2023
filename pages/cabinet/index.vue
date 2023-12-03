@@ -1,9 +1,9 @@
 <template lang="pug">
 .container.min-w-full
-  .campaign-list__wrapper.flex.flex-col.pt-4.px-6
+  .campaign-list__wrapper.flex.flex-col.py-4.px-6
     .flex.mb-12.w-full
       NuxtLink.campaign-list__btn.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet/create") Create
-    .flex.flex-col.space-y-4
+    .flex.flex-col.space-y-4.overflow-auto
       .campaigns__list.flex.w-full.border.border-dark.text-base.pl-8.py-2.cursor-pointer(
         v-for="(campaign, index) in campaignsList"
         :key="campaign.id"

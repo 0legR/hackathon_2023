@@ -1,7 +1,7 @@
 <template>
-  <div class="absolute z-30 flex-none w-64 h-full md:relative m-4">
+  <div class="left-sidenav__wrapper z-50 m-4 absolute z-30 flex-none w-64 md:relative">
     <div
-      class="left-sidenav w-full h-screen p-4 bg-white rounded-md shadow-lg border-light"
+      class="left-sidenav w-full h-full p-4 bg-white rounded-md shadow-lg border-light"
     >
       <div class="logo-wrapper flex justify-between mb-6">
         <div></div>
@@ -34,6 +34,9 @@ export default {
 </script>
 
 <style>
+.left-sidenav__wrapper {
+  height: calc(100% - 32px);
+}
 .left-sidenav {
   border-radius: 10px;
   background: rgba(22, 31, 80, 0.50);

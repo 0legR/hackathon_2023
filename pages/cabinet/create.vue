@@ -23,33 +23,34 @@
       .w-full.shadow-xl.rounded-md.overflow-hidden
         Preview(:campaign="form")
       button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.text-center Save
-  .container-prospects.flex.flex-col.w-full.overflow-auto.p-7(v-if="activeTab === prospectsTab")
+  .container-prospects.flex.flex-col.w-full.p-7(v-if="activeTab === prospectsTab")
     .flex.justify-between.w-full.mt-10
       button.text-base.text-dark(@click="importProspect") Import
       button.text-base.text-dark(@click="exportProspect") Export
     .flex.mt-10
       input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search" disabled)
-    .prospect-tab__list-table.flex.flex-col.w-full.space-y-4.mt-10
-      .prospect-tab__list-header.flex.h-10
+    .prospect-tab__list.flex.flex-col.w-full.mt-10
+      .prospect-tab__list-header.flex.mb-4
         .flex.items-center.justify-center(
           v-for="item in prospectsListHeader"
           :key="item"
         ) {{ item }}
-      .prospect-tab__list-content.flex.w-full.border.border-dark.rounded-md.text-base.text-dark.p-2(
-        v-for="(prospect, index) in prospectsList"
-      )
-        .flex.items-center.justify-center
-          .truncate {{ prospect.id || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.name || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.url || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.opens}}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.time_sec }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.clicks}}
+      .prospect-tab__list-table.space-y-4
+        .prospect-tab__list-content.flex.w-full.border.border-dark.rounded-md.text-base.text-dark.p-2(
+          v-for="(prospect, index) in prospectsList"
+        )
+          .flex.items-center.justify-center
+            .truncate {{ prospect.id || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.name || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.url || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.opens}}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.time_sec }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.clicks}}
 </template>
 
 <script setup>
@@ -236,10 +237,6 @@ async function getCampaign(id) {
 }
 
 await getCampaigns()
-// --------lifecycle hooks-----
-// onMounted(async () => {
-  // await getProspects()
-// })
 
 //------------head---------
 useHead({
@@ -266,17 +263,24 @@ useHead({
 </script>
 
 <style scoped>
+.prospect-tab__list {
+  height: 73%;
+}
+.prospect-tab__list-table {
+  overflow: auto;
+}
 .prospect-tab__list-content,
 .prospect-tab__list-header {
   color: #CBCBCB;
   border-radius: 10px;
   background: rgba(217, 217, 217, 0.10);
 }
-
-.prospect-tab__list-content {
-  height: 60px;
+.prospect-tab__list-header {
+  min-height: 40px;
 }
-
+.prospect-tab__list-content {
+  min-height: 60px;
+}
 .prospect-tab__list-header > div:nth-child(1),
 .prospect-tab__list-header > div:nth-child(2),
 .prospect-tab__list-header > div:nth-child(3) {
@@ -312,7 +316,8 @@ useHead({
 }
 .btn-tab {
   background-color: #161F50;
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
   color: white;
   font-size: 24px;
 }
@@ -325,14 +330,18 @@ useHead({
 .container-prospects,
 .container-form {
   border-radius: 15px;
+  height: calc(100vh - 160px);
   background: rgb(44, 32, 66, 0.60);
+  box-shadow: 0px 1px 8px 2px #415EF7;
 }
-.container-prospects {
-  height: calc(100vh - 90px);
+
+.container-form {
+  overflow: auto;
 }
 .container-prospects button {
   color: white;
-  width: 200px;
+  max-width: 200px;
+  width: 100%;
   height: 40px;
   flex-shrink: 0;
   border-radius: 10px;
