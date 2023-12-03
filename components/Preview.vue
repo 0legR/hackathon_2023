@@ -1,5 +1,6 @@
 <template lang="pug">
-.w-full.min-h-screen.preview-bg
+//- .w-full.min-h-screen.preview-bg
+.w-full.preview-bg
   .container
     .hero.w-full.h-60.flex.justify-center.items-center
       h1.text-light.text-6xl.font-bold {{ campaign.name }}

@@ -1,52 +1,56 @@
 <template lang="pug">
-.container.pt-6
-  .flex.w-fit.justify-center.items-center.mx-auto
-    button.w-40.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === mainTab }" @click="activeTab = mainTab") Main Settings
-    button.w-40.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === prospectsTab }" @click="activeTab = prospectsTab") Prospects
-  .flex.flex-col.gap-y-4.items-center.w-full.min-h-screen.mt-6(v-if="activeTab === mainTab")
-    input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.name" class="w-1/2" placeholder="Company name")
-    input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.domain" class="w-1/2" placeholder="Domain name")
-    select.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.goal" class="w-1/2" placeholder="Select your goal")
-      option.text-light(:disabled="true") Select your goal
-      option(v-for="goal of goals" :key="goal") {{ goal }}
-    textarea.border.border-dark.h-60.rounded-md.text-base.text-dark.p-2(v-model="form.description" class="w-4/5" placeholder="Deepest Insights, Alerts, & Automation Platform to Improve User Experience, real-time, 24×7")
-    .flex.flex-col.gap-y-4(class="w-1/2")
-      .flex.justify-center.items-center.gap-x-4.f-wull(v-if="form.buttons.length" v-for="(btn, index) of form.buttons" :key="`${btn}-${index}-b`")
-        input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.title" class="w-1/2" placeholder="Btn Label")
-        input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.url" class="w-1/2" placeholder="Btn Url")
-      .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
-        input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
-        input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
-    button.p-3.text-sm.font-medium.text-light.uppercase.bg-primary.rounded.text-center(@click="generate") Generate
-    .w-full.shadow-xl.rounded-md.overflow-hidden
-      Preview(:campaign="form")
-  .flex.flex-col.w-full.overflow-auto(v-if="activeTab === prospectsTab")
+.container.create-section.pt-16.min-w-full
+  .btn-section__wrapper.mb-2
+    .btn-section.w-full.flex.w-full.justify-center.items-center.mx-auto
+      button.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === mainTab }" @click="activeTab = mainTab") Campaign
+      button.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === prospectsTab }" @click="activeTab = prospectsTab") Prospects
+  .container-form.pb-6(v-if="activeTab === mainTab")
+    .container-form__content.flex.flex-col.gap-y-4.items-center.w-full.mt-6.px-4
+      input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2.mt-20(v-model="form.name" class="w-1/2" placeholder="Company name")
+      input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.domain" class="w-1/2" placeholder="Domain name")
+      select.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.goal" class="w-1/2" placeholder="Select your goal")
+        option.text-light(:disabled="true") Select your goal
+        option(v-for="goal of goals" :key="goal") {{ goal }}
+      textarea.border.border-dark.h-60.rounded-md.text-base.text-dark.p-2(v-model="form.description" class="w-4/5" placeholder="Deepest Insights, Alerts, & Automation Platform to Improve User Experience, real-time, 24×7")
+      .flex.flex-col.gap-y-4(class="w-1/2")
+        .flex.justify-center.items-center.gap-x-4.f-wull(v-if="form.buttons.length" v-for="(btn, index) of form.buttons" :key="`${btn}-${index}-b`")
+          input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.title" class="w-1/2" placeholder="Btn Label")
+          input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="btn.url" class="w-1/2" placeholder="Btn Url")
+        .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
+          input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
+          input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.text-center(@click="generate") Generate
+      .w-full.shadow-xl.rounded-md.overflow-hidden
+        Preview(:campaign="form")
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.text-center Save
+  .container-prospects.flex.flex-col.w-full.p-7(v-if="activeTab === prospectsTab")
     .flex.justify-between.w-full.mt-10
-      button.w-40.h-10.border.border-dark.h-10.rounded-md.text-base.text-dark(@click="importProspect") Import
-      button.w-40.h-10.border.border-dark.h-10.rounded-md.text-base.text-dark(@click="exportProspect") Export
+      button.text-base.text-dark(@click="importProspect") Import
+      button.text-base.text-dark(@click="exportProspect") Export
     .flex.mt-10
       input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search" disabled)
-    .prospect-tab__list-table.flex.flex-col.w-full.space-y-4.mt-10
-      .prospect-tab__list-header.flex.border.border-dark.h-10.rounded-md
+    .prospect-tab__list.flex.flex-col.w-full.mt-10
+      .prospect-tab__list-header.flex.mb-4
         .flex.items-center.justify-center(
           v-for="item in prospectsListHeader"
           :key="item"
         ) {{ item }}
-      .prospect-tab__list-content.flex.w-full.border.border-dark.h-20.rounded-md.text-base.text-dark.p-2(
-        v-for="(prospect, index) in prospectsList"
-      )
-        .flex.items-center.justify-center
-          .truncate {{ prospect.id || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.name || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.url || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.opens || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.time || 'N/A' }}
-        .flex.items-center.justify-center
-          .truncate {{ prospect.clicks || 'N/A' }}
+      .prospect-tab__list-table.space-y-4
+        .prospect-tab__list-content.flex.w-full.border.border-dark.rounded-md.text-base.text-dark.p-2(
+          v-for="(prospect, index) in prospectsList"
+        )
+          .flex.items-center.justify-center
+            .truncate {{ prospect.id || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.name || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.url || 'N/A' }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.opens}}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.time_sec }}
+          .flex.items-center.justify-center
+            .truncate {{ prospect.clicks}}
 </template>
 
 <script setup>
@@ -213,7 +217,8 @@ async function getCampaigns() {
       baseURL: 'https://clickit.anybiz.co/api/v1/',
     })
     campaigns.value = data.value
-    getCampaign(campaigns?.value[0]?.id)
+    getCampaign('518740495644495872')
+    // getCampaign(campaigns?.value[0]?.id)
   } catch (error) {
     console.log('getCampaigns Error')
   }
@@ -232,10 +237,6 @@ async function getCampaign(id) {
 }
 
 await getCampaigns()
-// --------lifecycle hooks-----
-// onMounted(async () => {
-// await getProspects()
-// })
 
 //------------head---------
 useHead({
@@ -262,6 +263,24 @@ useHead({
 </script>
 
 <style scoped>
+.prospect-tab__list {
+  height: 73%;
+}
+.prospect-tab__list-table {
+  overflow: auto;
+}
+.prospect-tab__list-content,
+.prospect-tab__list-header {
+  color: #CBCBCB;
+  border-radius: 10px;
+  background: rgba(217, 217, 217, 0.10);
+}
+.prospect-tab__list-header {
+  min-height: 40px;
+}
+.prospect-tab__list-content {
+  min-height: 60px;
+}
 .prospect-tab__list-header > div:nth-child(1),
 .prospect-tab__list-header > div:nth-child(2),
 .prospect-tab__list-header > div:nth-child(3) {
@@ -282,6 +301,11 @@ useHead({
 .prospect-tab__list-content > div:nth-child(6) {
   width: 13.3%;
 }
+.btn-section {
+  max-width: 600px;
+  border-radius: 10px;
+  overflow: hidden;
+}
 .vs__dropdown-toggle {
   color: rgb(9, 29, 37);
   padding: 0.5rem;
@@ -291,14 +315,56 @@ useHead({
   height: 2.5rem;
 }
 .btn-tab {
-  background-color: azure;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  background-color: #161F50;
+  max-width: 300px;
+  width: 100%;
+  color: white;
+  font-size: 24px;
 }
 .btn-tab--active {
-  background-color: aquamarine;
+  background-color: #41207D;
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.container-prospects,
+.container-form {
+  border-radius: 15px;
+  height: calc(100vh - 160px);
+  background: rgb(44, 32, 66, 0.60);
+  box-shadow: 0px 1px 8px 2px #415EF7;
+}
+
+.container-form {
+  overflow: auto;
+}
+.container-prospects button {
+  color: white;
+  max-width: 200px;
+  width: 100%;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #4462FF;
+}
+.container-form__content {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-form__content button {
+  width: 200px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #4462FF;
+}
+
+.container-form__content textarea,
+.container-form__content select,
+.container-form__content input {
+  background: rgba(217, 217, 217, 0.10);
+  color: #CBCBCB;
 }
 </style>
