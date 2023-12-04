@@ -9,14 +9,45 @@
           v-for="(btn, index) of campaign.buttons"
           :class="{ 'hidden': !btn.title || !btn.url }"
           :key="`${btn.title}_${index}`"
-          :to="btn.url"
+          :to="`https://${btn.url}`"
+          target="_blank"
+          rel="noopener"
+          @click.native="btnClick(btn)"
         ) {{ btn.title }}
       .flex(class="w-2/3")
-        .w-full.p-4(v-html="campaign.page_body")
-  footer.w-full.h-60.relative
+        .w-full.p-4.no-tailwind(v-html="campaign.page_body")
+  footer.w-full.h-60.relative(ref="foot")
 </template>
 <script setup>
+import { onMounted } from 'vue'
+
+const foot = ref(null)
+let observer = null
 const {campaign} = defineProps(['campaign'])
+const emit = defineEmits(['btnTrack', 'intersect', 'unintersect'])
+function btnClick(btn) {
+  emit('btnTrack', {
+	  type: 'click',
+	  url: btn.url,
+  })
+}
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    ([entry]) => {
+      emit(entry && entry.isIntersecting ? 'intersect' : 'unintersect')
+    },
+    {
+      threshold: 0.75,
+    }
+  )
+  observer.observe(foot.value)
+})
+
+onBeforeUnmount(() => {
+  observer.disconnect()
+})
+
 </script>
 <style>
 .hero {
@@ -36,4 +67,8 @@ footer::before {
 .border-r {
   border-right: 1px solid #ccc; 
 }
+.no-tailwind * {
+  all: revert;
+}
+
 </style>
