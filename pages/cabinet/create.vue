@@ -121,11 +121,31 @@ function exportProspect() {
   console.log('Export')
 }
 
-async function store() {
+function store() {
+  form.value.id ? update() : create()
+}
+
+async function create() {
   storePending.value = true
   try {
     const { data } = await useFetch(`campaigns`, {
       method: 'post',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+      body: form,
+    })
+    form.value.id = data.value.id
+  } catch (error) {
+    console.log('generate Error')
+  } finally {
+    storePending.value = false
+  }
+}
+
+async function update() {
+  storePending.value = true
+  try {
+    const { data } = await useFetch(`campaigns/${form.value.id}/settings`, {
+      method: 'put',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
       body: form,
     })
@@ -143,12 +163,12 @@ async function generate() {
       method: 'post',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
       body: {
-        name: form.value.name,
+        company_name: form.value.name,
         description: form.value.description,
         goal: form.value.goal,
       },
     })
-    form.page_body.value = data.value.page_body
+    form.value.page_body = data.value.page_body
   } catch (error) {
     console.log('generate Error')
   } finally {
@@ -167,9 +187,10 @@ async function getCampaign() {
     console.log('getCampaign Error')
   }
 }
-
-await getCampaign()
-await getProspects()
+if (route.query.id) {
+  await getCampaign()
+  await getProspects()
+}
 
 //------------head---------
 useHead({
