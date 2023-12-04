@@ -1,11 +1,11 @@
 <template lang="pug">
 .container-publick__wrapper.w-full.pb-4
   .container-publick.mx-auto.px-6
-    .container-publick__header.flex.items-center.justify-between.px-4
+    .container-publick__header.flex.items-center.px-4
       .w-fill
         NuxtLink(to="/cabinet")
           img(src="/logo.png" class="h-16")
-      .w-full.flex.justify-between.mr-14
+      .w-full.flex.justify-between.mx-auto
         .text-white.mr-2(v-for="(link, ndex) in headerDataLinks")
           NuxtLink(to="#") {{ link }}
       .w-fill
@@ -24,7 +24,7 @@
       img(src="~/public/solution.png")
     .container-publick__integrations.px-10
       .title-main CRM Integrations
-      .list-integrations.flex.justify-between.w-full.mx-auto
+      .list-integrations.flex.justify-center.flex-wrap.w-full.mx-auto.space-x-10
         img(src='~/public/hubspot.png' alt="img")
         img(src='~/public/zoho.png' alt="img")
         img(src='~/public/pipedrive.png' alt="img")
@@ -50,8 +50,8 @@
           span Track Analytics: Stay informed with real-time analytics for effective campaign management.
     .container-publick__plan.flex.flex-col
       .title-main.px-10.w-full Choose Your Plan
-      .flex.justify-around.w-full.px-10
-        .plans.m-4.p-5(
+      .flex.justify-center.flex-wrap.w-full.px-10
+        .plans.m-6.p-5(
           v-for="(plan, index) in planList"
           :key="index"
           :class="choosedPlan === plan.slug ? 'plans-active' : ''"
@@ -74,19 +74,70 @@
               span {{ plan?.features?.six }}
     .container-publick__reason
       .title-main.px-10 Why Choose Us?
-      .container-publick__reason-content.text-center.flex.flex-col
-        span Empowering Agencies with AI-Driven Innovation
-        span ClickIT for a seamless integration of cutting-edge AI, deep engagement insights, and innovative marketing solutions. We're not just a platform; we're your partner in redefining digital marketing success.
+      .container-publick__reason-content.text-center.flex.flex-col.items-center
+        .flex.relative Empowering Agencies with AI-Driven Innovation
+          .circle__three.absolute
+        .flex.text-center.mt-10 ClickIT for a seamless integration of cutting-edge AI, deep engagement insights, and<br> innovative marketing solutions.<br> We're not just a platform; we're your partner in redefining digital marketing success.
+        img.reason-content__image(src="~/public/diagrams.png" alt="image")
+    .container-publick__custom-plan
+      .container-publick__custom-plan-title.flex.flex-col.px-10.relative
+        .circle-foure.absolute
+        span.relative.z-10 Empower your business:
+        div.relative.z-10
+          span upgrade to 
+          span.custom-plan Custom plan 
+          span now!
+      .container-publick__custom-plan-subtitle.relative.z-10
+        span Strengthen <span class="custom-plan"> your B2B connections</span>: reliable, efficient, and innovative<br>solutions for seamless partnerships and growth
+        .custom-plan__input.mx-auto.flex.justify-between
+          input.h-full(placeholder="Email address...")
+          button Start now
     .container-publick__feedback
-      .title-main.w-full What our client say bout us
-      .flex.justify-between.w-full.px-10
-        .feedbacks__one
-        .feedbacks__two.flex.flex-col.items-center.justify-between.w-full.mx-4
-          .relative
-            .circle__two.absolute
-          div
-        .feedbacks__three
-    .footer
+      .title-main.w-full.px-10.mb-5 What our client say bout us
+      .flex.justify-center.flex-wrap.w-full.px-10
+        .feedback.flex.flex-col.items-center.p-4.mx-auto.mt-10
+          img(src='~/public/user-one.png')
+          span.name.my-7 Elise
+          span.overflow-auto Game-changing SaaS solution! Boosted efficiency and data-driven insights. Highly recommended!
+        .feedback.flex.flex-col.items-center.p-4.relative.mx-auto.mt-10
+          .circle__two.absolute
+          img.relative.z-10(src='~/public/user-two.png')
+          span.relative.z-10.name.my-7 Kris
+          span.overflow-auto.relative.z-10   User-friendly interface, abundant features, and remarkable tracking capabilities make this product a standout in its category. The simplicity of navigation ensures that even those new to the application can quickly grasp its functionality. With a plethora of features at your fingertips, it's a versatile tool that caters to a wide range.
+        .feedback.flex.flex-col.items-center.p-4.mx-auto.mt-10
+          img(src='~/public/user-three.png')
+          span.name.my-7 Anna
+          span.overflow-auto I recently started using ClickIt for our digital marketing campaigns, and it has proven to be a game-changer. The ability to create unique landing pages tailored to each campaign has significantly improved our targeting and conversion rates. The feature that stands out the most is the innovative chatbot integration, providing real-time communication. Highly recommended!
+    .footer.flex.items-center.p-4
+      .footer-logo
+        NuxtLink(to="/cabinet")
+          img(src="/logo.png" class="h-16")
+      .footer-devider.h-full
+      .footer-Links.flex.flex-wrap
+        .text-white.flex.flex-col.m-auto
+          NuxtLink(to="#") About
+          NuxtLink.my-4(to="#") Integration
+          NuxtLink(to="#") Pricing
+        .text-white.flex.flex-col.m-auto
+          NuxtLink(to="#") Reviews
+          NuxtLink.my-4(to="#") Contact
+          .h-6
+      .footer-devider.h-full
+      .footer-contacts.flex.h-full.p-7
+        .flex.flex-col.text-white.w-full
+          span Contacts:
+          span.mt-2.truncate ClickIT@clickit.fit
+        .flex.flex-col.justify-center.socials.ml-auto.space-y-8
+          .flex.space-x-8
+            NuxtLink(to="#")
+              img(src="~/public/twitter.png" alt="image")
+            NuxtLink(to="#")
+              img(src="~/public/facebook.png" alt="image")
+          .flex.space-x-8
+            NuxtLink(to="#")
+              img(src="~/public/linkedin.png" alt="image")
+            NuxtLink(to="#")
+              img(src="~/public/youtube.png" alt="image")
 </template>
 
 <script setup>
@@ -142,6 +193,94 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 </script>
 
 <style>
+.socials img {
+  width: 26px;
+  min-width: 26px;
+  height: 26px;
+}
+.footer-contacts {
+  width: 40%;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  width: 10%;
+  min-width: 100px;
+}
+.footer-Links {
+  width: 50%;
+  height: 100%;
+  columns: 6rem auto;
+}
+.footer-devider {
+  border: 1px solid #21307D;
+  box-shadow: 0px 0px 20px 0px #415EF7;
+}
+.container-publick__plan .title-main,
+.container-publick__feedback .title-main {
+  margin-bottom: 30px;
+}
+.custom-plan {
+  color: white;
+  font-weight: 700;
+}
+.container-publick__custom-plan {
+  margin-top: 264px;
+}
+.container-publick__custom-plan-title > div:nth-child(3) {
+  color: #9C9C9C;
+}
+.custom-plan__input input {
+  width: 100%;
+  min-width: 120px;
+  padding-left: 21px;
+  color: #4A4A4A;
+  font-family: Tahoma;
+  font-size: 16px;
+  border: 0px solid;
+  background: rgba(217, 217, 217, 0.00);
+}
+.custom-plan__input input:focus{
+  outline: none;
+}
+.custom-plan__input button {
+  color: #FFF;
+  font-family: Tahoma;
+  font-size: 18px;
+  font-weight: 400;
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  border-radius: 10px;
+  background: #4462FF;
+}
+.custom-plan__input {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 600px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #415EF7;
+  background: rgba(217, 217, 217, 0.00);
+}
+.container-publick__custom-plan-subtitle {
+  margin-top: 60px;
+  color: #9C9C9C;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 128.906%;
+}
+.container-publick__custom-plan-title {
+  color: #FFF;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 128.906%;
+}
 .container-publick__reason-content {
   color: #FFF;
   font-family: Roboto;
@@ -153,12 +292,16 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
   width: 100%;
   max-width: 900px;
 }
-.container-publick__reason-content > span:nth-child(1) {
+.reason-content__image {
+  margin-top: 200px;
+}
+.container-publick__reason-content > div:nth-child(1) {
   font-size: 36px;
 }
 .plans-active .title-section-price > div:nth-child(1) {
   color: #415EF7;
 }
+
 .plans-active .price-btn {
   background: #415EF7;
 }
@@ -187,6 +330,7 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
   color: #415EF7;
   font-size: 14px;
   font-weight: 700;
+  height: 17px;
 }
 .title-section-price > div:nth-child(4) {
   font-size: 14px;
@@ -227,17 +371,13 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
   background: rgba(44, 32, 66, 0.30);
   box-shadow: 0px 1px 8px 2px #415EF7;
 }
-.feedbacks__two > div {
-  max-width: 454px;
-  width: 100%;
-  height: 192px;
-  flex-shrink: 0;
-  border-radius: 15px;
-  background: rgba(44, 32, 66, 0.50);
-  box-shadow: 0px 1px 8px 2px #415EF7;
-}
-.feedbacks__one,
-.feedbacks__three {
+.feedback {
+  color: #FFF;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
   width: 100%;
   max-width: 250px;
   height: 410px;
@@ -245,6 +385,13 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
   border-radius: 15px;
   background: rgba(44, 32, 66, 0.50);
   box-shadow: 0px 1px 8px 2px #415EF7;
+}
+.feedback .name {
+  font-size: 18px;
+}
+.feedback img {
+  width: 77px;
+  height: 90px;
 }
 .plans {
   width: 300px;
@@ -282,18 +429,35 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 }
 .list-integrations img {
   max-width: 25%;
-  height: 55px;
+  min-width: 100px;
+  max-height: 60px;
 }
-.circle__two {
-  bottom: -50%;
-  left: -25%;
-  width: 140%;
-  box-shadow: 2px -44px 200px 22px rgba(68,98,255,1);
+.circle__three {
+  bottom: -70%;
+  left: 20%;
+  width: 60%;
+  box-shadow: 2px -44px 280px 62px rgba(68,98,255,1);
 }
 .circle {
   bottom: -50%;
   left: -25%;
   width: 140%;
+}
+.circle-foure {
+  z-index: 0;
+  width: 30%;
+  top: 30%;
+  left: 10%;
+  background: rgba(65, 32, 125, 0.50);
+  box-shadow: 0px 4px 250px 100px #5212D0;
+}
+.circle__two {
+  bottom: 40%;
+  left: -20%;
+  width: 140%;
+  box-shadow: 0px 4px 250px 100px #26378E;
+}
+.circle {
   box-shadow: 2px -44px 292px 62px rgba(68,98,255,1);
 }
 .container-publick__wrapper {
@@ -303,11 +467,14 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 .container-publick {
   max-width: 1220px;
 }
+.container-publick__header {
+  flex-direction: column;
+}
 .container-publick__header > div:nth-child(1) {
   min-width: fit-content;
 }
 .container-publick__header > div:nth-child(2) {
-  width: 100%;
+  width: 50%;
   max-width: 630px;
   min-width: fit-content;
 }
@@ -352,30 +519,15 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 .container-publick__title-content > div:nth-child(2) {
   font-size: 40px;
 }
-/*
-.bg-firebrick {
-  background-color: firebrick;
-  min-width: 132px;
+@media(min-width: 768px) {
+  .container-publick__header {
+    flex-direction: row;
+  }
+  .container-publick__header > div:nth-child(3) {
+    margin-left: auto;
+  }
+  .footer-contacts {
+    flex-wrap: nowrap;
+  }
 }
-.bg-darkcyan {
-  background-color: darkcyan;
-  min-width: 132px;
-}
-.bg-darkcyan:hover .default,
-.bg-firebrick:hover .default {
-  display: none;
-}
-.bg-darkcyan:hover .hovered,
-.bg-firebrick:hover .hovered {
-  display: block;
-}
-.hovered {
-  display: none;
-}
-.default {
-  display: block;
-}
-.mx-auto {
-  margin: 0 auto; */
-/* } */
 </style>

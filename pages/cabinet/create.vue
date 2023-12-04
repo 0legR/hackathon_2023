@@ -31,8 +31,8 @@
     .flex.justify-between.w-full.mt-10
       button.text-base.text-dark(@click="importProspect") Import
       button.text-base.text-dark(@click="exportProspect") Export
-    .flex.mt-10
-      input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search" disabled)
+    //- .flex.mt-10
+    //-   input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(class="w-1/2" placeholder="Search" disabled)
     .prospect-tab__list.flex.flex-col.w-full.mt-10
       .prospect-tab__list-header.flex.mb-4
         .flex.items-center.justify-center(
@@ -48,7 +48,12 @@
           .flex.items-center.justify-center
             .truncate {{ prospect.name || 'N/A' }}
           .flex.items-center.justify-center
-            .truncate {{ prospect.url || 'N/A' }}
+            .truncate.mr-2 {{ prospect.url || 'N/A' }}
+            .cursor-pointer.relative.w-7(
+              @click="copyUrl(prospect.url)"
+            )
+              img(src="~/public/copy.png" alt="image")
+              .copied-url.text-center.absolute(v-if="isCopied") Copied!
           .flex.items-center.justify-center
             .truncate {{ prospect.opens}}
           .flex.items-center.justify-center
@@ -87,6 +92,8 @@ const form = ref({
 const campaigns = ref([])
 const storePending = ref(false)
 const genPending = ref(false)
+const isCopied = ref(false)
+const timeout = ref(null)
 
 const mainTab = 'main'
 const prospectsTab = 'prospects'
@@ -101,6 +108,14 @@ const goals = [
 ]
 
 // ----------methods--------
+async function copyUrl(value) {
+  clearTimeout(timeout.value)
+  await navigator.clipboard.writeText(value)
+  isCopied.value = true
+  timeout.value = setTimeout(() => {
+    isCopied.value = false
+  }, 1000)
+}
 async function getProspects() {
   try {
     const { data } = await useFetch(`campaigns/${route.query.id}/prospects`, {
@@ -194,6 +209,10 @@ if (route.query.id) {
   await getProspects()
 }
 
+// ---------life hooks-----
+onBeforeUnmount(() => {
+  clearTimeout(timeout.value)
+})
 //------------head---------
 useHead({
   title: 'Campaign',
@@ -219,6 +238,15 @@ useHead({
 </script>
 
 <style scoped>
+.copied-url {
+  width: 100px;
+  border: 1px solid rgb(86, 81, 95);
+  background: #41207D;
+  color: white;
+  border-radius: 5px;
+  top: -5px;
+  right: -110px;
+}
 .prospect-tab__list {
   height: 73%;
 }

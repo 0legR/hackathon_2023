@@ -68,7 +68,7 @@ export default {
 }
 .cabinet-wrapper {
   margin: 0 auto;
-  max-width: 1220px;
+  max-width: 1375px;
   overflow: unset;
   height: 100vh;
 }
@@ -78,7 +78,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(115, 112, 119, 0.8);
+  background: rgba(25, 24, 27, 0.6);
 }
 .cabinet {
   height: 100%;
