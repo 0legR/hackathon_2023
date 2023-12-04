@@ -1,5 +1,5 @@
 <template lang="pug">
-.w-full
+.w-full.bg-white
   Preview(:campaign="prospect" @btnTrack="track" @intersect="trackView")
 </template>
 <script setup>
