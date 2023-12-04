@@ -1,26 +1,28 @@
 <template>
-  <div class="cabinet-wrapper relative p-4">
-    <div v-if="toggleOpen" class="blur-block" @click.stop="toggleOpen = false"></div>
-    <div class="cabinet flex">
-      <SideNav
-        v-if="toggleOpen"
-        :tabs="tabs"
-        :currentRoute="currentRoute"
-        @toggleOpen="toggleOpen = $event"
-      />
-      <div v-else class="absolute top-10 left-8">
-        <img @click="toggleOpen = true" src="/open-menu.png" class="h-6 cursor-pointer" />
-      </div>
-      <div v-if="!toggleOpen" class="absolute top-4 right-14">
-        <NuxtLink to="/cabinet">
-          <img src="/logo.png" class="h-16" />
-        </NuxtLink>
-      </div>
-      <div
-        class="main-block w-full"
-        :class="toggleOpen ? '' : 'show-sidebar'"
-      >
-        <slot />
+  <div class="cabinet-container relative">
+    <div v-if="toggleOpen" class="blur-block z-50" @click.stop="toggleOpen = false"></div>
+    <div class="cabinet-wrapper relative p-4">
+      <div class="cabinet flex">
+        <SideNav
+          v-if="toggleOpen"
+          :tabs="tabs"
+          :currentRoute="currentRoute"
+          @toggleOpen="toggleOpen = $event"
+        />
+        <div v-else class="absolute top-10 left-8">
+          <img @click="toggleOpen = true" src="/open-menu.png" class="h-6 cursor-pointer" />
+        </div>
+        <div v-if="!toggleOpen" class="absolute top-4 right-14">
+          <NuxtLink to="/cabinet">
+            <img src="/logo.png" class="h-16" />
+          </NuxtLink>
+        </div>
+        <div
+          class="main-block w-full"
+          :class="toggleOpen ? '' : 'show-sidebar'"
+        >
+          <slot />
+        </div>
       </div>
     </div>
   </div>
@@ -61,18 +63,22 @@ export default {
 </script>
 
 <style>
-.cabinet-wrapper {
+.cabinet-container {
   background: #000;
-  overflow: none;
+}
+.cabinet-wrapper {
+  margin: 0 auto;
+  max-width: 1375px;
+  overflow: unset;
   height: 100vh;
 }
-.cabinet-wrapper:has(.left-sidenav) .blur-block {
+.cabinet-container:has(.left-sidenav) .blur-block {
   width: 100%;
   min-height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(115, 112, 119, 0.8);
+  background: rgba(25, 24, 27, 0.6);
 }
 .cabinet {
   height: 100%;

@@ -21,7 +21,7 @@
         :key="tab.path"
         :class="`${
           currentRoute === tab.path ? 'text-secondary font-bold' : ''
-        } side-nav-item flex flex-col items-center justify-center text-white`"
+        } side-nav-item flex flex-col text-white`"
       >
         <NuxtLink :to="`${tab.path}`" class="w-full text-center py-1"> {{ tab.title }} </NuxtLink>
       </div>
@@ -41,7 +41,8 @@ export default {
 }
 .left-sidenav {
   border-radius: 10px;
-  background: rgba(22, 31, 80, 0.50);
+  background: #161F50;
+  box-shadow: 0px 1px 8px 2px #415EF7;
 }
 .logo-wrapper {
   border-bottom: 1px solid white;
@@ -54,6 +55,6 @@ export default {
   margin: 20px 0;
 }
 .side-nav-item:nth-child(4) {
-  margin-top: 140px;
+  margin-top: calc(100vh - 300px);
 }
 </style>
