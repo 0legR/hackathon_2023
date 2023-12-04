@@ -1,10 +1,10 @@
 <template lang="pug">
 .w-full.preview-bg
-  .container
+  .container.mx-auto
     .hero.w-full.h-60.flex.justify-center.items-center
       h1.text-light.text-6xl.font-bold {{ campaign.name }}
-    .w-full.flex
-      .flex.flex-col.gap-y-4.border-r.p-4.mt-2(class="w-1/3")
+    .w-full.flex.min-h-screen
+      .flex.flex-col.gap-y-4.border-r.p-4.my-2(class="w-1/3")
         NuxtLink.p-3.text-sm.font-medium.text-dark.uppercase.bg-light.text-center.shadow-xl.rounded-lg(
           v-for="(btn, index) of campaign.buttons"
           :class="{ 'hidden': !btn.title || !btn.url }"
