@@ -143,11 +143,13 @@ async function create() {
 
 async function update() {
   storePending.value = true
+  const payload = { ...form.value }
+  delete payload.id
   try {
     const { data } = await useFetch(`campaigns/${form.value.id}/settings`, {
       method: 'put',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
-      body: form,
+      body: payload,
     })
   } catch (error) {
     console.log('generate Error')
