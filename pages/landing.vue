@@ -1,10 +1,14 @@
 <template lang="pug">
 .w-full
-  Preview(:campaign="prospect")
+  Preview(:campaign="prospect" @btnTrack="track" @intersect="trackView")
 </template>
 <script setup>
+import { onMounted } from 'vue'
+
 const route = useRoute()
 const prospect = ref({})
+let isObserved = false
+let timeTimer = null
 async function getProspect() {
   try {
     const { data } = await useFetch(`tracker/${route.query.tid}/page`, {
@@ -21,17 +25,57 @@ if (route.query.tid) {
   await getProspect()
 }
 
+async function track(payload) {
+  try {
+    await useFetch(`tracker/${route.query.tid}`, {
+      method: 'post',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+      body: payload,
+    })
+  } catch (error) {
+    console.log('track Error')
+  }
+}
+function trackView() {
+  if (isObserved) return
+  isObserved = true
+  track({ type: 'view' })
+}
+
+onMounted(() => {
+  setTimeTrack()
+  document.addEventListener('visibilitychange', function (event) {
+    document.hidden ? unsetTimeTrack() : setTimeTrack()
+  })
+})
+
+function setTimeTrack() {
+  timeTimer = setInterval(() => track({ type: 'time', period_sec: 5 }), 5000)
+}
+
+function unsetTimeTrack() {
+  clearInterval(timeTimer)
+}
+
+onBeforeUnmount(() => {
+  clearInterval(timeTimer)
+})
+
 //------------head---------
 useHead({
-  title: 'Landing',
+  title: prospect.value.name || 'Landing',
+  link: {
+    rel: 'icon',
+    href: '/logo.png',
+  },
   meta: [
     {
       name: 'description',
-      // content: prospect.value.Plot,
+      content: prospect.value.name,
     },
     {
       property: 'og:description',
-      // content: data.value.Plot,
+      content: prospect.value.name,
     },
     {
       property: 'og:image',
