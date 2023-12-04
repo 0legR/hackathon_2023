@@ -6,7 +6,9 @@
       <div class="logo-wrapper flex justify-between mb-6">
         <div></div>
         <div class="flex items-center">
-          <img src="/logo.png" class="h-16" />
+          <NuxtLink to="/cabinet">
+            <img src="/logo.png" class="h-16" />
+          </NuxtLink>
         </div>
         <img
           src="/close.png"
@@ -19,9 +21,9 @@
         :key="tab.path"
         :class="`${
           currentRoute === tab.path ? 'text-secondary font-bold' : ''
-        } py-1 side-nav-item flex flex-col items-center justify-center text-white`"
+        } side-nav-item flex flex-col items-center justify-center text-white`"
       >
-        <NuxtLink :to="`${tab.path}`"> {{ tab.title }} </NuxtLink>
+        <NuxtLink :to="`${tab.path}`" class="w-full text-center py-1"> {{ tab.title }} </NuxtLink>
       </div>
     </div>
   </div>

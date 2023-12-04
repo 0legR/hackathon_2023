@@ -20,9 +20,9 @@
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
       button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="generate")
-        .loader.h-5.w-5(v-if="genPendingPending")
+        .loader.h-5.w-5(v-if="genPending")
         span(v-else) Generate
-      .w-full.shadow-xl.rounded-md.overflow-hidden
+      .w-full.shadow-xl.rounded-md.overflow-hidden.bg-white
         Preview(:campaign="form")
       button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="store")
         .loader.h-5.w-5(v-if="storePending")
@@ -322,8 +322,8 @@ useHead({
   color: #CBCBCB;
 }
 .loader {
-  border: 3x solid #f3f3f3; /* Light grey */
-  border-top: 3px solid #3498db; /* Blue */
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
   border-radius: 50%;
   animation: spin 2s linear infinite;
 }
