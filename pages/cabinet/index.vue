@@ -4,10 +4,10 @@
     .flex.mb-12.w-full
       NuxtLink.campaign-list__btn.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet/create") Create
     .flex.flex-col.space-y-4.overflow-auto
-      .campaigns__list.flex.w-full.border.border-dark.text-base.pl-8.py-2.cursor-pointer(
+      NuxtLink.campaigns__list.flex.w-full.border.border-dark.text-base.pl-8.py-2.cursor-pointer(
         v-for="(campaign, index) in campaignsList"
         :key="campaign.id"
-				@click.stop="goToCampaign(campaign.id)"
+				:to="{name: 'cabinet-create', query: { id: campaign.id }}"
       )
         .flex.items-center.text-2xl.mr-4 {{ campaign?.name }}
         .flex.flex-col.items-center.justify-center.w-full
@@ -39,11 +39,6 @@ async function getCampaigns() {
   }
 }
 await getCampaigns()
-
-function goToCampaign(id) {
-	console.log('ID', id)
-}
-
 </script>
 <style>
 .campaign-list__wrapper {
