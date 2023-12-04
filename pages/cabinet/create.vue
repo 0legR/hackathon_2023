@@ -19,10 +19,14 @@
         .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
-      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.text-center(@click="generate") Generate
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="generate")
+        .loader.h-5.w-5(v-if="genPendingPending")
+        span(v-else) Generate
       .w-full.shadow-xl.rounded-md.overflow-hidden
         Preview(:campaign="form")
-      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.text-center Save
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="store")
+        .loader.h-5.w-5(v-if="storePending")
+        span(v-else) Save
   .container-prospects.flex.flex-col.w-full.p-7(v-if="activeTab === prospectsTab")
     .flex.justify-between.w-full.mt-10
       button.text-base.text-dark(@click="importProspect") Import
@@ -59,6 +63,8 @@ definePageMeta({
   layout: 'cabinet',
 })
 
+const route = useRoute()
+
 const activeTab = ref('main')
 const form = ref({
   name: '',
@@ -79,93 +85,14 @@ const form = ref({
 })
 
 const campaigns = ref([])
+const storePending = ref(false)
+const genPending = ref(false)
 
 const mainTab = 'main'
 const prospectsTab = 'prospects'
 
 const prospectsListHeader = ref(['Id', 'Name', 'Links', 'Opens', 'Times', 'Click'])
-const prospectsList = ref([
-	{
-		id: "234234234",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "232434234",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "23322234234",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "23423465465434",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "2334",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "24",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "23465434",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	},
-  {
-		id: "434",
-		key: "email or linkedin",
-		name: "John",
-		url: "http://domain/home?tid=234234",
-		clicks: 100500,
-		opens: 100500,
-		time: 100500,
-		last_activity: "datetime",
-	}
-])
+const prospectsList = ref([])
 const goals = [
   'Collect Emails',
   'Get Contacted',
@@ -174,9 +101,9 @@ const goals = [
 ]
 
 // ----------methods--------
-async function getProspects(id) {
+async function getProspects() {
   try {
-    const { data } = await useFetch(`campaigns/${id}/prospects`, {
+    const { data } = await useFetch(`campaigns/${route.query.id}/prospects`, {
       method: 'get',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
     })
@@ -193,9 +120,26 @@ function importProspect() {
 function exportProspect() {
   console.log('Export')
 }
-async function generate() {
+
+async function store() {
+  storePending.value = true
   try {
-    const { data } = await useFetch(`campaigns/${form?.value?.id}/gen-page`, {
+    const { data } = await useFetch(`campaigns`, {
+      method: 'post',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+      body: form,
+    })
+  } catch (error) {
+    console.log('generate Error')
+  } finally {
+    storePending.value = false
+  }
+}
+
+async function generate() {
+  genPending.value = true
+  try {
+    const { data } = await useFetch(`campaigns/gen-page`, {
       method: 'post',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
       body: {
@@ -207,36 +151,25 @@ async function generate() {
     form.page_body.value = data.value.page_body
   } catch (error) {
     console.log('generate Error')
+  } finally {
+    genPending.value = false
   }
 }
 
-async function getCampaigns() {
+async function getCampaign() {
   try {
-    const { data } = await useFetch(`campaigns`, {
-      method: 'get',
-      baseURL: 'https://clickit.anybiz.co/api/v1/',
-    })
-    campaigns.value = data.value
-    getCampaign('518740495644495872')
-    // getCampaign(campaigns?.value[0]?.id)
-  } catch (error) {
-    console.log('getCampaigns Error')
-  }
-}
-async function getCampaign(id) {
-  try {
-    const { data } = await useFetch(`campaigns/${id}/settings`, {
+    const { data } = await useFetch(`campaigns/${route.query.id}/settings`, {
       method: 'get',
       baseURL: 'https://clickit.anybiz.co/api/v1/',
     })
     form.value = data.value
-    getProspects(id)
   } catch (error) {
     console.log('getCampaign Error')
   }
 }
 
-await getCampaigns()
+await getCampaign()
+await getProspects()
 
 //------------head---------
 useHead({
@@ -366,5 +299,16 @@ useHead({
 .container-form__content input {
   background: rgba(217, 217, 217, 0.10);
   color: #CBCBCB;
+}
+.loader {
+  border: 3x solid #f3f3f3; /* Light grey */
+  border-top: 3px solid #3498db; /* Blue */
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
