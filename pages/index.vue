@@ -1,14 +1,20 @@
 <template lang="pug">
 .container-publick__wrapper.w-full.pb-4
-  .container-publick.mx-auto.px-6
-    .container-publick__header.flex.items-center.px-4
-      .w-fill
+  .container-publick.mx-auto.px-6(@click="isHeaderOpen = false")
+    .container-publick__header.flex.items-center.px-4.w-full.py-4
+      .header-logo.w-fill
         NuxtLink(to="/")
           img(src="/logo.png" class="h-16")
-      .w-full.flex.justify-between.mx-auto
+      .header-burger
+        .relative
+          img.h-6.cursor-pointer.mr-2(@click.stop="isHeaderOpen = !isHeaderOpen" src="/open-menu.png")
+          .header-popup.absolute.p-6.space-y-2(v-if="isHeaderOpen")
+            .text-white.mr-2(v-for="(link, ndex) in headerDataLinks")
+              NuxtLink(to="#") {{ link }}
+      .header-links.w-fill.flex.justify-between.mx-auto
         .text-white.mr-2(v-for="(link, ndex) in headerDataLinks")
           NuxtLink(to="#") {{ link }}
-      .w-fill
+      .flex.ml-auto
         NuxtLink.btn-link.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet") Sign up
     .container-publick__title-content.flex.flex-col.items-center.w-full
       .flex.relative
@@ -94,9 +100,9 @@
           NuxtLink.btn-link.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet") Start now
     .container-publick__feedback
       .title-main.w-full.px-10.mb-5 What our client say about us
-      .flex.justify-center.flex-wrap.w-full.px-40.relative
+      .carusel-container.flex.justify-center.flex-wrap.px-40.relative
         .circle__two.absolute
-        Carousel.pt-2(:itemsToShow="slidesCount" :transition="500")
+        Carousel(:itemsToShow="slidesCount" :transition="500")
           Slide(v-for="slide in slides" :key="slide.id")
             .feedback.m-2.flex.flex-col.items-center.p-4.mt-10
               img(:src='`/${slide.img}.png`')
@@ -108,23 +114,18 @@
       .footer-logo
         NuxtLink(to="/")
           img(src="/logo.png" class="h-16")
-      .footer-devider.h-full
-      .footer-Links.flex.flex-wrap
-        .text-white.flex.flex-col.m-auto
-          NuxtLink(to="#") About
-          NuxtLink.my-4(to="#") Integration
-          NuxtLink(to="#") Pricing
-        .text-white.flex.flex-col.m-auto
-          NuxtLink(to="#") Reviews
-          NuxtLink.my-4(to="#") Contact
-          .h-6
-      .footer-devider.h-full
-      .footer-contacts.flex.h-full.p-7
-        .flex.flex-col.text-white.w-full
+      .footer-Links.text-white.py-6.mr-2
+        NuxtLink(to="#") About
+        NuxtLink(to="#") Integration
+        NuxtLink(to="#") Pricing
+        NuxtLink(to="#") Reviews
+        NuxtLink(to="#") Contact
+      .footer-contacts.h-full
+        .flex.flex-col.text-white
           span Contacts:
           span.mt-4.truncate ClickIT@clickit.fit
           span.mt-4.truncate +1 267 808 7628
-        .flex.flex-col.justify-center.socials.ml-auto.space-y-8
+        .flex.flex-col.justify-center.socials.space-y-8.mt-4
           .flex.space-x-8
             NuxtLink(to="#")
               img(src="~/public/twitter.png" alt="image")
@@ -148,6 +149,7 @@ const slides = [
   { id: '5', img: 'user_three', name: 'Elise', content: 'Game-changing SaaS solution! Boosted efficiency and data-driven insights. Highly recommended!'},
 ]
 const showSlide = ref(3)
+const isHeaderOpen = ref(false)
 const slidesCount = computed(() => {
   return showSlide.value
 })
@@ -208,6 +210,19 @@ onMounted(() => {
 
 
 <style>
+.header-popup {
+  top: 40px;
+  width: 200px;
+  border-radius: 10px;
+  background: rgba(44, 32, 66, 0.50);
+  box-shadow: 0px 1px 8px 2px #415EF7;
+}
+.header-popup a:hover {
+  color: #415EF7;
+}
+.carusel-container .carousel {
+  max-width: 300px;
+}
 .carousel__prev svg,
 .carousel__next svg {
   color: white;
@@ -223,21 +238,9 @@ onMounted(() => {
   min-width: 26px;
   height: 26px;
 }
-.footer-contacts {
-  width: 40%;
-}
 .footer-logo {
   width: 10%;
   min-width: 100px;
-}
-.footer-Links {
-  width: 50%;
-  height: 100%;
-  columns: 6rem auto;
-}
-.footer-devider {
-  border: 1px solid #21307D;
-  box-shadow: 0px 0px 20px 0px #415EF7;
 }
 .container-publick__plan .title-main,
 .container-publick__feedback .title-main {
@@ -379,7 +382,6 @@ onMounted(() => {
   border-radius: 10px;
   margin-top: 112px;
   width: 100%;
-  height: 196px;
   flex-shrink: 0;
   background: rgba(44, 32, 66, 0.30);
   box-shadow: 0px 1px 8px 2px #415EF7;
@@ -480,17 +482,6 @@ onMounted(() => {
 .container-publick {
   max-width: 1220px;
 }
-.container-publick__header {
-  flex-direction: column;
-}
-.container-publick__header > div:nth-child(1) {
-  min-width: fit-content;
-}
-.container-publick__header > div:nth-child(2) {
-  width: 50%;
-  max-width: 630px;
-  min-width: fit-content;
-}
 .btn-link {
   color: white;
   font-size: 18px;
@@ -532,15 +523,47 @@ onMounted(() => {
 .container-publick__title-content > div:nth-child(2) {
   font-size: 40px;
 }
+.footer-Links {
+  width: 50%;
+  height: 100%;
+  grid-row-gap: 1rem;
+  border-right: 1px solid #21307D;
+  border-left: 1px solid #21307D;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+.footer-contacts {
+  width: 40%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+.header-logo,
+.header-links {
+  display: none;
+}
 @media(min-width: 768px) {
-  .container-publick__header {
-    flex-direction: row;
+  .header-burger {
+    display: none;
+  }
+  .header-logo,
+  .header-links {
+    display: flex;
+  }
+  .carusel-container .carousel {
+    max-width: 100%;
   }
   .container-publick__header > div:nth-child(3) {
-    margin-left: auto;
+    width: 50%;
+    max-width: 630px;
+    min-width: fit-content;
   }
   .footer-contacts {
-    flex-wrap: nowrap;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .footer-Links {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
