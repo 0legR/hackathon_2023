@@ -3,7 +3,7 @@
   .container-publick.mx-auto.px-6
     .container-publick__header.flex.items-center.px-4
       .w-fill
-        NuxtLink(to="/cabinet")
+        NuxtLink(to="/")
           img(src="/logo.png" class="h-16")
       .w-full.flex.justify-between.mx-auto
         .text-white.mr-2(v-for="(link, ndex) in headerDataLinks")
@@ -91,7 +91,7 @@
         span Strengthen <span class="custom-plan"> your B2B connections</span>: reliable, efficient, and innovative<br>solutions for seamless partnerships and growth
         .custom-plan__input.mx-auto.flex.justify-between
           input.h-full(placeholder="Email address...")
-          button Start now
+          NuxtLink.btn-link.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet") Start now
     .container-publick__feedback
       .title-main.w-full.px-10.mb-5 What our client say about us
       .flex.justify-center.flex-wrap.w-full.px-40.relative
@@ -106,7 +106,7 @@
             Navigation
     .footer.flex.items-center.p-4
       .footer-logo
-        NuxtLink(to="/cabinet")
+        NuxtLink(to="/")
           img(src="/logo.png" class="h-16")
       .footer-devider.h-full
       .footer-Links.flex.flex-wrap
@@ -265,17 +265,6 @@ onMounted(() => {
 }
 .custom-plan__input input:focus{
   outline: none;
-}
-.custom-plan__input button {
-  color: #FFF;
-  font-family: Tahoma;
-  font-size: 18px;
-  font-weight: 400;
-  width: 100%;
-  max-width: 200px;
-  height: 100%;
-  border-radius: 10px;
-  background: #4462FF;
 }
 .custom-plan__input {
   margin-top: 40px;
