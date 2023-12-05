@@ -9,7 +9,7 @@
           :currentRoute="currentRoute"
           @toggleOpen="toggleOpen = $event"
         />
-        <div v-else class="absolute top-10 left-8">
+        <div v-else class="absolute top-10 left-8 z-50">
           <img @click="toggleOpen = true" src="/open-menu.png" class="h-6 cursor-pointer" />
         </div>
         <div v-if="!toggleOpen" class="absolute top-4 right-14">
