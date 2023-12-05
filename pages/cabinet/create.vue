@@ -1,5 +1,5 @@
 <template lang="pug">
-.container.create-section.pt-16.min-w-full
+.container.create-section.pt-16.min-w-full.relative
   .btn-section__wrapper.mb-2
     .btn-section.w-full.flex.w-full.justify-center.items-center.mx-auto
       button.h-10.btn-tab(:class="{ 'btn-tab--active': activeTab === mainTab }" @click="activeTab = mainTab") Campaign
@@ -49,17 +49,17 @@
             .truncate {{ prospect.name || 'N/A' }}
           .flex.items-center.justify-center
             .truncate.mr-2 {{ prospect.url || 'N/A' }}
-            .cursor-pointer.relative.w-7(
+            .cursor-pointer.w-7(
               @click="copyUrl(prospect.url)"
             )
               img(src="~/public/copy.png" alt="image")
-              .copied-url.text-center.absolute(v-if="isCopied") Copied!
           .flex.items-center.justify-center
             .truncate {{ prospect.opens}}
           .flex.items-center.justify-center
             .truncate {{ prospect.time_sec }}
           .flex.items-center.justify-center
             .truncate {{ prospect.clicks}}
+  .copied-url.text-center.absolute(v-if="isCopied") Copied!
 </template>
 
 <script setup>
@@ -244,8 +244,9 @@ useHead({
   background: #41207D;
   color: white;
   border-radius: 5px;
-  top: -5px;
-  right: -110px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .prospect-tab__list {
   height: 73%;
@@ -264,6 +265,9 @@ useHead({
 }
 .prospect-tab__list-content {
   min-height: 60px;
+}
+.prospect-tab__list-content img {
+  min-width: 12px;
 }
 .prospect-tab__list-header > div:nth-child(1),
 .prospect-tab__list-header > div:nth-child(2),
