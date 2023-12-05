@@ -1,12 +1,21 @@
 <template lang="pug">
 .w-full.bg-white
   Preview(:campaign="prospect" @btnTrack="track" @intersect="trackView")
+  .ask-me-response.fixed.shadow-xl.text-base.text-dark.p-2.bg-light.rounded-lg(v-if="response")
+    p {{ response }}
+    button.collapse-resp.absolute(@click="response = ''") &times;
+  .ask-me.fixed.flex.items-center.h-10.shadow-xl.rounded-lg.bg-light.overflow-hidden(v-else)
+    input.text-base.text-dark.h-full.pl-2(v-model="message" placeholder="Ask me")
+    button.flex.items-center.justify-center.px-6(@click="sendMessage")
+      img(src="/send.png")
 </template>
 <script setup>
 import { onMounted } from 'vue'
 
 const route = useRoute()
 const prospect = ref({})
+const message = ref('')
+const response = ref('')
 let isObserved = false
 let timeTimer = null
 async function getProspect() {
@@ -23,6 +32,20 @@ async function getProspect() {
 
 if (route.query.tid) {
   await getProspect()
+}
+
+async function sendMessage() {
+  try {
+    const {data} = await useFetch(`tracker/${route.query.tid}/chat`, {
+      method: 'post',
+      baseURL: 'https://clickit.anybiz.co/api/v1/',
+      body: { message: message },
+    })
+    console.log('data', data)
+    response.value = data.value.body
+  } catch (error) {
+    console.log('track Error')
+  }
 }
 
 async function track(payload) {
@@ -88,3 +111,20 @@ useHead({
   ],
 })
 </script>
+<style>
+.ask-me-response,
+.ask-me {
+  bottom: 10px;
+  left: 10px;
+}
+.ask-me input:focus {
+  outline: none;
+}
+.ask-me-response {
+  width: 300px;
+}
+.collapse-resp {
+  top: -5px;
+  right: 2px;
+}
+</style>
