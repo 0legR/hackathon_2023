@@ -37,7 +37,7 @@ export default {
 
 <style>
 .left-sidenav__wrapper {
-  height: calc(100% - 32px);
+  height: calc(100% - 72px);
 }
 .left-sidenav {
   border-radius: 10px;
@@ -56,5 +56,10 @@ export default {
 }
 .side-nav-item:nth-child(4) {
   margin-top: calc(100vh - 300px);
+}
+@media(min-width: 768px) {
+  .left-sidenav__wrapper {
+    height: calc(100% - 32px);
+  }
 }
 </style>

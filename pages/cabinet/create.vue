@@ -44,7 +44,7 @@
           v-for="(prospect, index) in prospectsList"
         )
           .flex.items-center.justify-center
-            .truncate {{ prospect.id || 'N/A' }}
+            .truncate {{ prospect.key || 'N/A' }}
           .flex.items-center.justify-center
             .truncate {{ prospect.name || 'N/A' }}
           .flex.items-center.justify-center
@@ -98,7 +98,7 @@ const timeout = ref(null)
 const mainTab = 'main'
 const prospectsTab = 'prospects'
 
-const prospectsListHeader = ref(['Id', 'Name', 'Links', 'Opens', 'Times', 'Click'])
+const prospectsListHeader = ref(['Key', 'Name', 'Links', 'Opens', 'Times', 'Click'])
 const prospectsList = ref([])
 const goals = [
   'Collect Emails',
@@ -249,7 +249,7 @@ useHead({
   transform: translate(-50%, -50%);
 }
 .prospect-tab__list {
-  height: 73%;
+  height: calc(100% - 100px);
 }
 .prospect-tab__list-table {
   overflow: auto;
@@ -331,7 +331,6 @@ useHead({
   max-width: 200px;
   width: 100%;
   height: 40px;
-  flex-shrink: 0;
   border-radius: 10px;
   background: #4462FF;
 }
