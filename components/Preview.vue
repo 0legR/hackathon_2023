@@ -62,7 +62,7 @@ footer::before {
   transform: rotate(180deg);
 }
 .preview-bg {
-  background: linear-gradient(150deg, #d0f8e2, transparent);
+  background: linear-gradient(150deg, #ccc, transparent);
 }
 .border-r {
   border-right: 1px solid #ccc; 
