@@ -19,12 +19,12 @@
         .flex.justify-center.items-center.gap-x-4.f-wull(v-else)
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].title" class="w-1/2" placeholder="Btn Label")
           input.border.border-dark.h-10.rounded-md.text-base.text-dark.p-2(v-model="form.buttons[0].url" class="w-1/2" placeholder="Btn Url")
-      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="generate")
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="generate" :disabled="genPending")
         .loader.h-5.w-5(v-if="genPending")
         span(v-else) Generate
       .w-full.shadow-xl.rounded-md.overflow-hidden.bg-white
         Preview(:campaign="form")
-      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="store")
+      button.p-3.text-sm.font-medium.text-light.bg-primary.rounded.flex.items-center.justify-center(@click="store" :disabled="storePending")
         .loader.h-5.w-5(v-if="storePending")
         span(v-else) Save
   .container-prospects.flex.flex-col.w-full.p-7(v-if="activeTab === prospectsTab")
