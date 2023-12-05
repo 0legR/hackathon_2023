@@ -19,9 +19,9 @@
     .container-publick__title-content.flex.flex-col.items-center.w-full
       .flex.relative
         .circle.absolute
-        span.mr-4 Click
+        span.mr-4.relative.z-50 Click
         span IT
-      .flex.flex-col.text-center.my-16
+      .flex.flex-col.text-center.mb-14.mt-10
         span.text-white Gain valuable<br>insights into your audience.
         span.container-publick__title-content-subtitle Create a landing page instantly with our AI-powered tool and<br>detailed analytics support.
       NuxtLink.btn-link.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg(to="/cabinet") Get Started
@@ -463,6 +463,7 @@ onMounted(() => {
   bottom: -50%;
   left: -25%;
   width: 140%;
+  box-shadow: 2px -44px 292px 62px rgba(68,98,255,0.7);
 }
 .circle-foure {
   z-index: 0;
@@ -477,9 +478,6 @@ onMounted(() => {
   left: 30%;
   width: 40%;
   box-shadow: 0px 4px 250px 100px #26378E;
-}
-.circle {
-  box-shadow: 2px -44px 292px 62px rgba(68,98,255,1);
 }
 .container-publick__wrapper {
   background: #000;
@@ -497,10 +495,10 @@ onMounted(() => {
   background: #4462FF;
 }
 .container-publick__title-content {
-  padding: 200px 0 0;
+  padding: 120px 0 0;
 }
 .container-publick__title-content-subtitle {
-  margin-top: 70px;
+  margin-top: 20px;
   color: rgba(141, 141, 141, 0.85);
   text-align: center;
   font-family: Tahoma;
