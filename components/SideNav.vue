@@ -6,7 +6,7 @@
       <div class="logo-wrapper flex justify-between mb-6">
         <div></div>
         <div class="flex items-center">
-          <NuxtLink to="/cabinet">
+          <NuxtLink to="/">
             <img src="/logo.png" class="h-16" />
           </NuxtLink>
         </div>

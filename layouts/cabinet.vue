@@ -12,8 +12,8 @@
         <div v-else class="absolute top-10 left-8 z-50">
           <img @click="toggleOpen = true" src="/open-menu.png" class="h-6 cursor-pointer" />
         </div>
-        <div v-if="!toggleOpen" class="absolute top-4 right-14">
-          <NuxtLink to="/cabinet">
+        <div v-if="!toggleOpen" class="cabinet-logo absolute top-4 right-14">
+          <NuxtLink to="/">
             <img src="/logo.png" class="h-16" />
           </NuxtLink>
         </div>
@@ -63,6 +63,9 @@ export default {
 </script>
 
 <style>
+.cabinet-logo {
+  display: none;
+}
 .cabinet-container {
   background: #000;
 }
@@ -96,5 +99,10 @@ export default {
 .show-sidebar .campaign-list__wrapper {
   margin-left: 80px;
   margin-top: 10px;
+}
+@media(min-width: 768px) {
+  .cabinet-logo {
+    display: flex;
+  }
 }
 </style>

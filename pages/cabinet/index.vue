@@ -62,7 +62,8 @@ await getCampaigns()
   color: white;
   font-family: Tahoma;
   font-size: 18px;
-  width: 200px;
+  width: 100%;
+  max-width: 200px;
   height: 40px;
   flex-shrink: 0;
   border-radius: 10px;
