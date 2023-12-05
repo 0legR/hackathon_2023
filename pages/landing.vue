@@ -6,8 +6,9 @@
     button.collapse-resp.absolute(@click="response = ''") &times;
   .ask-me.fixed.flex.items-center.h-10.shadow-xl.rounded-lg.bg-light.overflow-hidden(v-else)
     input.text-base.text-dark.h-full.pl-2(v-model="message" placeholder="Ask me")
-    button.flex.items-center.justify-center.px-6(@click="sendMessage")
-      img(src="/send.png")
+    button.flex.items-center.justify-center.px-6(@click="sendMessage" :disabled="messagePending")
+      .loader.h-5.w-5(v-if="messagePending")
+      img(v-else src="/send.png")
 </template>
 <script setup>
 import { onMounted } from 'vue'
@@ -16,8 +17,10 @@ const route = useRoute()
 const prospect = ref({})
 const message = ref('')
 const response = ref('')
+let messagePending = ref(false)
 let isObserved = false
 let timeTimer = null
+
 async function getProspect() {
   try {
     const { data } = await useFetch(`tracker/${route.query.tid}/page`, {
@@ -35,6 +38,7 @@ if (route.query.tid) {
 }
 
 async function sendMessage() {
+  messagePending.value = true
   try {
     const {data} = await useFetch(`tracker/${route.query.tid}/chat`, {
       method: 'post',
@@ -44,7 +48,9 @@ async function sendMessage() {
     console.log('data', data)
     response.value = data.value.body
   } catch (error) {
-    console.log('track Error')
+    console.log('message Error')
+  } finally {
+    messagePending.value = false
   }
 }
 
@@ -127,4 +133,16 @@ useHead({
   top: -5px;
   right: 2px;
 }
+.loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 </style>
