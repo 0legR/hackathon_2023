@@ -60,6 +60,7 @@ footer::before {
   height: 15rem;
   background-image: url('@/hero-bg.jpeg');
   transform: rotate(180deg);
+  background-size: 100%;
 }
 .preview-bg {
   background: linear-gradient(150deg, #ccc, transparent);
@@ -70,5 +71,4 @@ footer::before {
 .no-tailwind * {
   all: revert;
 }
-
 </style>
