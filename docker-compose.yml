@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  hackaton_nuxt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:5001"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+  anybiz_nginx:
+    image: nginx:1.19
+    healthcheck:
+      test: ["CMD", "service", "nginx", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    ports:
+      - "8090:80"
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - hackaton_nuxt
