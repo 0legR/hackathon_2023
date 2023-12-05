@@ -93,21 +93,17 @@
           input.h-full(placeholder="Email address...")
           button Start now
     .container-publick__feedback
-      .title-main.w-full.px-10.mb-5 What our client say bout us
-      .flex.justify-center.flex-wrap.w-full.px-10
-        .feedback.flex.flex-col.items-center.p-4.mx-auto.mt-10
-          img(src='~/public/user-one.png')
-          span.name.my-7 Elise
-          span.overflow-auto Game-changing SaaS solution! Boosted efficiency and data-driven insights. Highly recommended!
-        .feedback.flex.flex-col.items-center.p-4.relative.mx-auto.mt-10
-          .circle__two.absolute
-          img.relative.z-10(src='~/public/user-two.png')
-          span.relative.z-10.name.my-7 Kris
-          span.overflow-auto.relative.z-10   User-friendly interface, abundant features, and remarkable tracking capabilities make this product a standout in its category. The simplicity of navigation ensures that even those new to the application can quickly grasp its functionality. With a plethora of features at your fingertips, it's a versatile tool that caters to a wide range.
-        .feedback.flex.flex-col.items-center.p-4.mx-auto.mt-10
-          img(src='~/public/user-three.png')
-          span.name.my-7 Anna
-          span.overflow-auto I recently started using ClickIt for our digital marketing campaigns, and it has proven to be a game-changer. The ability to create unique landing pages tailored to each campaign has significantly improved our targeting and conversion rates. The feature that stands out the most is the innovative chatbot integration, providing real-time communication. Highly recommended!
+      .title-main.w-full.px-10.mb-5 What our client say about us
+      .flex.justify-center.flex-wrap.w-full.px-40.relative
+        .circle__two.absolute
+        Carousel.pt-2(:itemsToShow="slidesCount" :transition="500")
+          Slide(v-for="slide in slides" :key="slide.id")
+            .feedback.m-2.flex.flex-col.items-center.p-4.mt-10
+              img(:src='`/${slide.img}.png`')
+              span.name.my-7 {{ slide.name }}
+              span.overflow-auto {{ slide.content }}
+          template(v-slot:addons='{}')
+            Navigation
     .footer.flex.items-center.p-4
       .footer-logo
         NuxtLink(to="/cabinet")
@@ -126,7 +122,8 @@
       .footer-contacts.flex.h-full.p-7
         .flex.flex-col.text-white.w-full
           span Contacts:
-          span.mt-2.truncate ClickIT@clickit.fit
+          span.mt-4.truncate ClickIT@clickit.fit
+          span.mt-4.truncate +1 267 808 7628
         .flex.flex-col.justify-center.socials.ml-auto.space-y-8
           .flex.space-x-8
             NuxtLink(to="#")
@@ -141,6 +138,19 @@
 </template>
 
 <script setup>
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+const slides = [
+  { id: '1', img: 'user_three', name: 'Elise', content: 'Game-changing SaaS solution! Boosted efficiency and data-driven insights. Highly recommended!' },
+  { id: '2', img: 'user_one', name: 'Kris', content: 'User-friendly interface, abundant features, and remarkable tracking capabilities make this product a standout in its category. The simplicity of navigation ensures that even those new to the application can quickly grasp its functionality. With a plethora of features at your fingertips, it\'s a versatile tool that caters to a wide range.' },
+  { id: '3', img: 'user_two', name: 'Anna', content: 'I recently started using ClickIt for our digital marketing campaigns, and it has proven to be a game-changer. The ability to create unique landing pages tailored to each campaign has significantly improved our targeting and conversion rates. The feature that stands out the most is the innovative chatbot integration, providing real-time communication. Highly recommended!' },
+  { id: '4', img: 'user_one', name: 'Kris', content: 'User-friendly interface, abundant features, and remarkable tracking capabilities make this product a standout in its category. The simplicity of navigation ensures that even those new to the application can quickly grasp its functionality. With a plethora of features at your fingertips, it\'s a versatile tool that caters to a wide range.'},
+  { id: '5', img: 'user_three', name: 'Elise', content: 'Game-changing SaaS solution! Boosted efficiency and data-driven insights. Highly recommended!'},
+]
+const showSlide = ref(3)
+const slidesCount = computed(() => {
+  return showSlide.value
+})
 const choosedPlan = ref('')
 const planList = [
   {
@@ -190,9 +200,24 @@ const planList = [
   }
 ]
 const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Contact'])
+onMounted(() => {
+  if (document?.body?.clientWidth < 1174) showSlide.value = 2
+  if (document?.body?.clientWidth < 768) showSlide.value = 1
+})
 </script>
 
+
 <style>
+.carousel__prev svg,
+.carousel__next svg {
+  color: white;
+}
+.carousel__prev {
+  left: -40px;
+}
+.carousel__next {
+  right: -40px;
+}
 .socials img {
   width: 26px;
   min-width: 26px;
@@ -200,7 +225,6 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 }
 .footer-contacts {
   width: 40%;
-  flex-wrap: wrap;
 }
 .footer-logo {
   width: 10%;
@@ -453,8 +477,8 @@ const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Cont
 }
 .circle__two {
   bottom: 40%;
-  left: -20%;
-  width: 140%;
+  left: 30%;
+  width: 40%;
   box-shadow: 0px 4px 250px 100px #26378E;
 }
 .circle {
