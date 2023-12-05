@@ -39,21 +39,21 @@
     .container-publick__middle-block-wrapper.w-full
       .title-main.px-10 How It works
       .container-publick__middle-block
-        .flex
+        .flex.items-center
           .middle-block__icon
-          span Sign up and log in: Register and log in effortlessly to get started.
+          span <b>Sign up and log in</b>: Register and log in effortlessly to get started.
         .flex.items-center.mt-12
           .middle-block__icon
-          span Create Your Company: Establish your company profile with a short description.
+          span <b>Create Your Company</b>: Establish your company profile with a short description.
         .flex.items-center.mt-12
           .middle-block__icon
-          span Instant AI-Generated landing pages: Click once and let AI craft a compelling, custom landing page<br>for your business effortlessly
+          span <b>Instant AI-Generated landing pages</b>: Click once and let AI craft a compelling, custom landing page<br>for your business effortlessly
         .flex.items-center.mt-12
           .middle-block__icon
           span Import your prospects and AI Generate you unique URLs for each lead: Input prospects, and unique URLs<br>are automatically generated for each.
         .flex.items-center.mt-12
           .middle-block__icon
-          span Track Analytics: Stay informed with real-time analytics for effective campaign management.
+          span <b>Track Analytics</b>: Stay informed with real-time analytics for effective campaign management.
     .container-publick__plan.flex.flex-col
       .title-main.px-10.w-full Choose Your Plan
       .flex.justify-center.flex-wrap.w-full.px-10
@@ -69,7 +69,7 @@
             .flex.my-4 {{ plan.subtitle }}
           .main-section-price
             .price-btn__wrapper.border.w-full.flex.justify-center
-              button.price-btn.mt-10.mb-6(@click="choosedPlan = plan.slug") Start free trial
+              NuxtLink.price-btn.flex.items-center.justify-center.w-full.py-2.text-sm.font-normal.text-lg.mt-10.mb-6(to="/cabinet") Start free trial
             .features.mb-8 Features:
             .features-content.flex.flex-col.pl-4
               span {{ plan?.features?.one }}
@@ -153,7 +153,7 @@ const isHeaderOpen = ref(false)
 const slidesCount = computed(() => {
   return showSlide.value
 })
-const choosedPlan = ref('')
+const choosedPlan = ref('busines')
 const planList = [
   {
     slug: 'starter',
@@ -162,7 +162,7 @@ const planList = [
     save: 'Save $212/ year',
     subtitle: 'Conversions |  500',
     features: {
-      one: '✓ 3 Custom domain',
+      one: '✓ 3 Custom domains',
       two: '✓ 30 AI landing page templates',
       three: '✓ Free landing page generator',
       foure: '✓ Integration',
@@ -177,7 +177,7 @@ const planList = [
     save: 'Save $421/ year',
     subtitle: 'Conversions |  1000',
     features: {
-      one: '✓ 5 Custom domain',
+      one: '✓ 5 Custom domains',
       two: '✓ 50 AI landing page templates',
       three: '✓ Free landing page generator',
       foure: '✓ Integration',
@@ -188,7 +188,7 @@ const planList = [
   {
     slug: 'custom',
     title: 'Custom plan',
-    price: 'Conntact sales team',
+    price: 'Contact sales team',
     save: '',
     subtitle: 'Conversions |  (based on specific needs)',
     features: {
@@ -202,6 +202,11 @@ const planList = [
   }
 ]
 const headerDataLinks = ref(['About', 'Integration', 'Pricing', 'Reviews', 'Contact'])
+
+function openLink() {
+  if (link) window.open('/cabinet', '_blank', 'noopener')
+}
+
 onMounted(() => {
   if (document?.body?.clientWidth < 1174) showSlide.value = 2
   if (document?.body?.clientWidth < 768) showSlide.value = 1
@@ -422,11 +427,12 @@ onMounted(() => {
   box-shadow: 0px 1px 8px 2px #415EF7;
 }
 .middle-block__icon {
-  width: 25px;
-  height: 25px;
+  width: 10px;
+  height: 10px;
   margin-right: 60px;
   flex-shrink: 0;
-  background: rgba(44, 32, 66, 0.30);
+  border-radius: 50%;
+  background: #415EF7;
   box-shadow: 0px 1px 8px 2px #415EF7;
 }
 .container-publick__middle-block span {
